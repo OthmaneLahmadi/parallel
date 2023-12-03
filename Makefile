@@ -1,4 +1,4 @@
-src=file.c
+src=
 obj=$(src:.c=.o)
 exec=exec
 Compiler=mpicc
