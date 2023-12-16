@@ -1,22 +1,27 @@
-src=
-obj=$(src:.c=.o)
-exec=exec
-Compiler=mpicc
-process=2
-host_=
-run:$(exec)
-ifdef host_
-	mpirun -np $(process) -hostfile $(host_) $(exec)
+s=
+obj=$(s:.c=.o)
+executable=exec
+compiler=mpicc
+p=2
+h=
+
+.PHONY:run
+
+run:$(executable)
+ifdef h
+	@mpirun -np $(p) -hostfile $(h) $(executable)
 else
-	mpirun -np $(process) $(exec)
+	@mpirun -np $(p) $(executable)
 endif
 
-$(exec):$(obj)
+$(executable):$(obj)
+	@$(compiler) -o $(executable) $(obj)
 
-	$(Compiler) -o $(exec) $(obj)
-
-$(obj):$(src)
-	@$(Compiler) -c $(src)
+$(obj):$(s)
+	@$(compiler) -c $(s)
 
 clean:
-	@rm -f $(obj) $(exec)
+	@rm -f $(obj) $(executable)
+
+
+
